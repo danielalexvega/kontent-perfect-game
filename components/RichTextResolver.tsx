@@ -34,9 +34,9 @@ const createRichTextResolver = (
 
       switch (componentItem.system.type) {
         case 'event_navigation':
-          return <EventNavigation pages={componentItem.elements.event_navigation?.linkedItems || []} />;
+          return <EventNavigation pages={(componentItem.elements.event_navigation as any)?.linkedItems || []} />;
         case 'article_layout':
-          return <ArticleLayout articles={componentItem.elements.article_layout?.linkedItems || []} />;
+          return <ArticleLayout articles={(componentItem.elements.article_layout as any)?.linkedItems || []} />;
         default:
           return null;
       }
