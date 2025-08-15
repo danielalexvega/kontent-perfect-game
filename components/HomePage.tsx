@@ -165,14 +165,14 @@ export default function HomePage() {
               </div>
             )}
 
-            {/* Article Layout */}
+            {/* Article Layout
             {content?.item?.elements?.body_copy?.linkedItems && (
               <div className="text-lg text-gray-700 mb-8" >
                 <ArticleLayout articles={content.item.elements.body_copy.linkedItems[1].elements.article_layout.linkedItems}>
 
                 </ArticleLayout>
               </div>
-            )}
+            )} */}
 
 
           </div>
