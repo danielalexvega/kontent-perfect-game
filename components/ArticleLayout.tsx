@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { ArticleType } from '@/types/article-type.generated';
 import imageLoader from '@/lib/imageLoader';
+import { useSmartLink, smartLinkAttributes } from '@/hooks/useSmartLink';
 
 interface ArticleLayoutProps {
   articles: ArticleType[];
@@ -18,6 +19,9 @@ export default function ArticleLayout({
   subtitle = "Stay updated with the latest news and insights",
   maxArticles = 6 
 }: ArticleLayoutProps) {
+  const { getItemAttributes, isPreviewMode } = useSmartLink();
+  const isPreview = isPreviewMode();
+  
   // Limit articles to maxArticles
   const displayArticles = articles.slice(0, maxArticles);
 
@@ -59,6 +63,7 @@ export default function ArticleLayout({
               <article 
                 key={article.system.id} 
                 className="group bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
+                {...smartLinkAttributes(isPreview, getItemAttributes(article))}
               >
                 {/* Article Link */}
                 <Link href={articleSlug ? `/articles/${articleSlug}` : '#'} className="block">

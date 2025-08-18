@@ -5,12 +5,16 @@ import Link from 'next/link';
 import { ArticleType } from '@/types/article-type.generated';
 import { RichTextComponent } from '@/components/RichTextResolver';
 import imageLoader from '@/lib/imageLoader';
+import { useSmartLink, smartLinkAttributes } from '@/hooks/useSmartLink';
 
 interface ArticleDetailPageProps {
   article: ArticleType;
 }
 
 export default function ArticleDetailPage({ article }: ArticleDetailPageProps) {
+  const { getItemAttributes, getElementAttributes, isPreviewMode } = useSmartLink();
+  const isPreview = isPreviewMode();
+
   const imageUrl = article.elements.image?.value[0]?.url;
   const imageAlt = article.elements.image?.value[0]?.description || article.elements.title?.value || 'Article image';
   const articleTitle = article.elements.title?.value || 'Untitled Article';
@@ -27,7 +31,7 @@ export default function ArticleDetailPage({ article }: ArticleDetailPageProps) {
   const tags = article.elements.tags?.value || [];
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white" {...smartLinkAttributes(isPreview, getItemAttributes(article))}>
       {/* Hero Section */}
       <div className="relative">
         {/* Breadcrumb */}
@@ -61,20 +65,29 @@ export default function ArticleDetailPage({ article }: ArticleDetailPageProps) {
               )}
 
               {/* Title */}
-              <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 leading-tight">
+              <h1 
+                className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 leading-tight"
+                {...smartLinkAttributes(isPreview, getElementAttributes(article, 'title'))}
+              >
                 {articleTitle}
               </h1>
 
               {/* Subtitle */}
               {articleSubtitle && (
-                <p className="text-xl text-gray-600 mb-6 max-w-3xl mx-auto">
+                <p 
+                  className="text-xl text-gray-600 mb-6 max-w-3xl mx-auto"
+                  {...smartLinkAttributes(isPreview, getElementAttributes(article, 'subtitle'))}
+                >
                   {articleSubtitle}
                 </p>
               )}
 
               {/* Summary */}
               {articleSummary && (
-                <p className="text-lg text-gray-500 mb-8 max-w-2xl mx-auto">
+                <p 
+                  className="text-lg text-gray-500 mb-8 max-w-2xl mx-auto"
+                  {...smartLinkAttributes(isPreview, getElementAttributes(article, 'summary'))}
+                >
                   {articleSummary}
                 </p>
               )}
@@ -126,7 +139,10 @@ export default function ArticleDetailPage({ article }: ArticleDetailPageProps) {
 
       {/* Featured Image */}
       {imageUrl && (
-        <div className="relative h-64 md:h-96 bg-gray-200">
+        <div 
+          className="relative h-64 md:h-96 bg-gray-200"
+          {...smartLinkAttributes(isPreview, getElementAttributes(article, 'image'))}
+        >
           <Image
             src={imageUrl}
             alt={imageAlt}
@@ -141,7 +157,10 @@ export default function ArticleDetailPage({ article }: ArticleDetailPageProps) {
 
       {/* Article Content */}
       <main className="max-w-4xl mx-auto px-4 py-12">
-        <div className="prose prose-lg prose-gray max-w-none">
+        <div 
+          className="prose prose-lg prose-gray max-w-none"
+          {...smartLinkAttributes(isPreview, getElementAttributes(article, 'body'))}
+        >
           {/* Article Body */}
           {article.elements.body && (
             <RichTextComponent richTextElement={article.elements.body} />
@@ -150,7 +169,10 @@ export default function ArticleDetailPage({ article }: ArticleDetailPageProps) {
 
         {/* Tags */}
         {tags.length > 0 && (
-          <div className="mt-12 pt-8 border-t border-gray-200">
+          <div 
+            className="mt-12 pt-8 border-t border-gray-200"
+            {...smartLinkAttributes(isPreview, getElementAttributes(article, 'tags'))}
+          >
             <h3 className="text-lg font-semibold text-gray-900 mb-4">Tags</h3>
             <div className="flex flex-wrap gap-2">
               {tags.map((tag, index) => (
