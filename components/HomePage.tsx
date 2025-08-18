@@ -118,6 +118,7 @@ export default function HomePage() {
                   sizes="100vw"
                   className="mx-auto w-auto h-auto"
                   priority
+                  unoptimized
                   onLoad={() => console.log('Image loaded successfully')}
                   onError={(e) => console.error('Image failed to load:', e)}
                 />
