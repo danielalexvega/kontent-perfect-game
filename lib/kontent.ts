@@ -14,7 +14,7 @@ if (typeof window === 'undefined') { // Only log on server side
 
 export const deliveryClient = createDeliveryClient({
   environmentId,
-  previewApiKey: apiKey,
+  previewApiKey: apiKey
 });
 
 // Content item codenames

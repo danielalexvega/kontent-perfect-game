@@ -6,6 +6,7 @@ import HtmlToPortableText from './HtmlToPortableText';
 import { LandingPageType } from '@/types/landing-page-type.generated';
 import { RichTextComponent } from './RichTextResolver';
 import ArticleLayout from './ArticleLayout';
+import imageLoader from '@/lib/imageLoader';
 
 // Configuration - easily change the content item codename here
 const CONTENT_CODENAME = 'iowa_league_landing_page';
@@ -113,12 +114,12 @@ export default function HomePage() {
                 <Image
                   src={heroImageUrl}
                   alt={content?.item?.elements?.hero_image?.value[0]?.description || 'PG Iowa League Logo'}
-                  width={0}
-                  height={0}
+                  width={1000}
+                  height={1000} 
                   sizes="100vw"
                   className="mx-auto w-auto h-auto"
                   priority
-                  unoptimized
+                  loader={imageLoader}
                   onLoad={() => console.log('Image loaded successfully')}
                   onError={(e) => console.error('Image failed to load:', e)}
                 />

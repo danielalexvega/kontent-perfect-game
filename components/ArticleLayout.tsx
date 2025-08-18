@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { ArticleType } from '@/types/article-type.generated';
+import imageLoader from '@/lib/imageLoader';
 
 interface ArticleLayoutProps {
   articles: ArticleType[];
@@ -70,6 +71,7 @@ export default function ArticleLayout({
                         fill
                         className="object-cover group-hover:scale-105 transition-transform duration-300"
                         sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                        loader={imageLoader}
                       />
                     ) : (
                       // Fallback for articles without images - Scout Notes style
